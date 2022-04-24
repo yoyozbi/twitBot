@@ -20,6 +20,6 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/yoyozbi/twitBot:latest
+      run: docker build . --file Dockerfile --tag ghcr.io/yoyozbi/twitbot:latest
     - name: Push the Docker image
-      run: docker push ghcr.io/yoyozbi/twitBot:latest
+      run: docker push ghcr.io/yoyozbi/twitbot:latest
