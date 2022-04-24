@@ -1,0 +1,27 @@
+{
+  "name": "twitbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoyozbi/twitBot.git"
+  },
+  "keywords": [
+    "twitter",
+    "discordjs"
+  ],
+  "author": "YohanZbinden",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/yoyozbi/twitBot/issues"
+  },
+  "homepage": "https://github.com/yoyozbi/twitBot#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "twitter-api-v2": "^1.12.0"
+  }
+}
