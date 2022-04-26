@@ -2,7 +2,7 @@
   Copyright (C) 2022 Zbinden Yohan 
 */
 
-const { getConfig } = require("./utils");
+const { getConfig, sleep } = require("./utils");
 const { sendMessageToWebhook } = require("./discord");
 const { TwitterApi, ETwitterStreamEvent } = require("twitter-api-v2");
 
@@ -75,6 +75,9 @@ async function editStreamRules(appClient, config) {
       add: [{ value: rule }],
     });
     console.log(`[TWITTER] rule added`);
+    console.log(`[TWITTER] waiting 10s for rules to be applied`);
+    await sleep(10000);
+    console.log(`[TWITTER] rules applied`);
   }
 }
 module.exports = { load };

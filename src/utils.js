@@ -6,5 +6,7 @@ const { join } = require("path");
 function getConfig() {
   return JSON.parse(readFileSync(join(__dirname, "../config.json")));
 }
-
-module.exports = { getConfig };
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+module.exports = { getConfig, sleep };
