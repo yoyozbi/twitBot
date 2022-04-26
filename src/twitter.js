@@ -3,6 +3,7 @@
 */
 
 const { getConfig, sleep } = require("./utils");
+const { twitLog } = require("./logger");
 const { sendMessageToWebhook } = require("./discord");
 const { TwitterApi, ETwitterStreamEvent } = require("twitter-api-v2");
 
@@ -16,16 +17,13 @@ async function load() {
   });
   const appClient = await client.appLogin();
   await editStreamRules(appClient, config);
-
   const stream = await appClient.v2.searchStream({ autoConnect: true });
 
-  stream.on(ETwitterStreamEvent.Connected, () =>
-    console.log("[TWITTER] connected")
-  );
+  stream.on(ETwitterStreamEvent.Connected, () => twitLog.info("connected"));
 
-  stream.on(ETwitterStreamEvent.ReconnectAttempt, () => {
-    console.log("[TWITTER] reconnecting");
-  });
+  stream.on(ETwitterStreamEvent.ReconnectAttempt, () =>
+    twitLog.info("reconnecting")
+  );
 
   stream.on(ETwitterStreamEvent.Data, async (eventData) => {
     if (eventData.data.id && eventData.data.text) {
@@ -40,8 +38,6 @@ async function load() {
         mess = mess.replace("{link}", link);
         sendMessageToWebhook(t, mess);
       }
-    } else {
-      console.log(eventData);
     }
   });
   process.on("exit", () => {
@@ -55,7 +51,7 @@ async function editStreamRules(appClient, config) {
   if (appliedRules.data) {
     const ruleId = appliedRules.data.find((r) => r.value == rule);
     if (ruleId) {
-      console.log(`[TWITTER] rule already exists`);
+      twitLog.info(`Stream filter rule already exists`);
     } else {
       let ids = appliedRules.data.map((rule) => rule.id);
       await appClient.v2.updateStreamRules({
@@ -66,18 +62,18 @@ async function editStreamRules(appClient, config) {
       await appClient.v2.updateStreamRules({
         add: [{ value: rule }],
       });
-      console.log(
-        `[TWITTER] another rule(s) existed removed it and added new rule`
+      twitLog.info(
+        `another Stream filter rule(s) existed removed it and added new rule`
       );
     }
   } else {
     await appClient.v2.updateStreamRules({
       add: [{ value: rule }],
     });
-    console.log(`[TWITTER] rule added`);
-    console.log(`[TWITTER] waiting 10s for rules to be applied`);
+    twitLog.info(`Stream filter rule added`);
+    twitLog.info(`waiting 10s for rules to be applied`);
     await sleep(10000);
-    console.log(`[TWITTER] rules applied`);
+    twitLog.info(`Stream filter rule applied`);
   }
 }
 module.exports = { load };

@@ -1,6 +1,7 @@
 /*
   Copyright (C) 2022 Zbinden Yohan 
 */
+const { webLog } = require("./logger");
 const { post } = require("axios");
 
 async function sendMessageToWebhook(t, message) {
@@ -9,9 +10,9 @@ async function sendMessageToWebhook(t, message) {
       content: message,
     });
   } catch (e) {
-    console.log(e.response.data);
+    webLog.error(e.response.data);
   }
-  console.log(`[WEBHOOK] sent new tweet from @${t.username}`);
+  webLog.info(`sent new tweet from @${t.username}`);
 }
 
 module.exports = { sendMessageToWebhook };

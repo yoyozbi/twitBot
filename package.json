@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js | bunyan -o short"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/yoyozbi/twitBot#readme",
   "dependencies": {
     "axios": "^0.26.1",
+    "bunyan": "^1.8.15",
     "twitter-api-v2": "^1.12.0"
   }
 }
