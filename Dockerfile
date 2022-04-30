@@ -1,8 +1,13 @@
-FROM node:lts-alpine3.15
+FROM golang:buster as builder
 
 COPY . /app
 WORKDIR /app
 
-RUN npm install
+RUN go build -o /app/main src/main.go
 
-CMD ["node", "src/index.js"]
+FROM golang:buster as runner
+
+WORKDIR /app
+COPY --from=builder /app/main /app/main
+
+CMD ["/app/main"]

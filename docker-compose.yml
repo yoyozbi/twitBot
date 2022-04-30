@@ -4,3 +4,5 @@ services:
     build: .
     container_name: twitBot
     restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json
