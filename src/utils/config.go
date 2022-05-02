@@ -11,6 +11,8 @@ type Track struct {
 	Webhook 	string `json:"webhook"`
 	Message 	string `json:"message"`
 	Username 	string `json:"username"`
+  WithReplies bool `json:"withReplies"`
+  WithRetweets bool `json:"withRetweets"`
 }
 type Config struct {
 	ConsumerKey    string `json:"twitterConsumerKey"`

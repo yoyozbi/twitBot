@@ -14,13 +14,13 @@ func Start(c chan *twitter.Tweet) {
 
 	config := utils.LoadConfig()
 
-	twitConfig := &clientcredentials.Config{
-		ClientID:     config.ConsumerKey,
-		ClientSecret: config.ConsumerSecret,
-		TokenURL:     "https://api.twitter.com/oauth2/token",
-	}
-	httpClient := twitConfig.Client(context.Background())
-	client := twitter.NewClient(httpClient)
+  //oAuth1config := oauth1.NewConfig()
+	//twitConfig := &clientcredentials.Config{
+	//	ClientID:     config.ConsumerKey,
+	//	ClientSecret: config.ConsumerSecret,
+	//	TokenURL:     "https://api.twitter.com/oauth2/token",
+	//}
+	//client := twitter.NewClient(httpClient)
 
 	st := &Stream{
 		client: httpClient,

@@ -18,22 +18,6 @@ type Stream struct {
 	client *http.Client	
 }
 
-type Rule struct {
-	Value string `json:"value"`
-	Tag string `json:"tag"`
-}
-
-type StreamRules struct {
-	Data []struct {
-		Id string `json:"id"`
-		Value string `json:"value"`
-	} `json:"data"`
-	Meta struct {
-		Sent string `json:"sent"`
-		ResultCount int `json:"result_count"`
-	} `json:"meta"`
-}
-
 func (s *Stream) GetAllRules() StreamRules{
 	resp, err := s.client.Get(rulesURL)	
 	if err != nil {
@@ -52,37 +36,6 @@ func (s *Stream) GetAllRules() StreamRules{
 	}
 
 	return rules
-}
-
-type DeleteRules struct {	
-	Ids []string `json:"ids,omitempty"`
-}
-type DeleteRulesParams struct {
-	Delete DeleteRules `json:"delete,omitempty" binding:"required"`
-}
-
-type AddRulesParams struct {
-	Add []Rule  `json:"add,omitempty" binding:"required"`
-}
-
-type UpdateResponse struct {
-	Meta struct {
-		Sent string `json:"sent"`
-		Summary struct {
-			Deleted int `json:"deleted"`
-			NotDeleted int `json:"not_deleted"`
-			Created int `json:"created"`
-			NotCreated int `json:"not_created"`
-			Valid int`json:"valid"`
-			NotValid int `json:"not_valid"`
-		} `json:"summary"`
-	} `json:"meta"`
-	Errors []struct {
-		Value string `json:"value"`
-		Id string `json:"id"`
-		Title string `json:"title"`
-		Type string `json:"type"`
-	} `json:"errors"`
 }
 
 func (s *Stream)UpdateRule(params interface{}) (UpdateResponse,error) {
