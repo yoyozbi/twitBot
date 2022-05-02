@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main ]
 
+env:
+  image: ghcr.io/yoyozbi/twitbot
 
 jobs:
 
@@ -19,7 +21,15 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/yoyozbi/twitbot:latest
-    - name: Push the Docker image
-      run: docker push ghcr.io/yoyozbi/twitbot:latest
+    - name: Build and push the Docker images
+      run: | 
+        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag {{ env.image }}:amd64 .
+        docker push $IMAGE:amd64
+        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64" --tag {{ env.image }}:arm64 .
+        docker push $IMAGE:arm64
+    - name: Create and publish manifest
+        run: |
+          docker manifest create {{ env.image }} {{ env.image }}:amd64 {{ env.image }}:arm64
+          docker manifest annotate {{ env.image }} {{ env.image }}:arm64 --os linux --arch arm64
+          docker manifest annotate {{ env.image }} {{ env.image }}:amd64 --os linux --arch amd64
+          docker manifest push {{ env.image }}
