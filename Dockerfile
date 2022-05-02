@@ -1,5 +1,7 @@
 FROM golang:alpine3.15 as builder
 
+ARG opts
+
 COPY . /app
 WORKDIR /app
 
