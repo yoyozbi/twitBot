@@ -23,13 +23,13 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and push the Docker images
       run: | 
-        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag {{ env.image }}:amd64 .
-        docker push $IMAGE:amd64
-        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64" --tag {{ env.image }}:arm64 .
-        docker push {{ env.image }}:arm64
+        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=amd64" --tag ${{ env.image }}:amd64 .
+        docker push ${{ env.image }}:amd64
+        docker build --build-arg opts="CGO_ENABLED=0 GOARCH=arm64" --tag ${{ env.image }}:arm64 .
+        docker push ${{ env.image }}:arm64
     - name: Create and publish manifest
       run: |
-          docker manifest create {{ env.image }} {{ env.image }}:amd64 {{ env.image }}:arm64
-          docker manifest annotate {{ env.image }} {{ env.image }}:arm64 --os linux --arch arm64
-          docker manifest annotate {{ env.image }} {{ env.image }}:amd64 --os linux --arch amd64
-          docker manifest push {{ env.image }}
+          docker manifest create ${{ env.image }} ${{ env.image }}:amd64 ${{ env.image }}:arm64
+          docker manifest annotate ${{ env.image }} ${{ env.image }}:arm64 --os linux --arch arm64
+          docker manifest annotate ${{ env.image }} ${{ env.image }}:amd64 --os linux --arch amd64
+          docker manifest push ${{ env.image }}
