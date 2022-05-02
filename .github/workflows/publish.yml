@@ -31,5 +31,4 @@ jobs:
       run: |
           docker manifest create ${{ env.image }} ${{ env.image }}:amd64 ${{ env.image }}:arm64
           docker manifest annotate ${{ env.image }} ${{ env.image }}:arm64 --os linux --arch arm64
-          docker manifest annotate ${{ env.image }} ${{ env.image }}:amd64 --os linux --arch amd64
           docker manifest push ${{ env.image }}
