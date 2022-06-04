@@ -45,7 +45,9 @@ func LoadConfig() Config {
 	if err != nil {
 		log.Fatal(err)
 	}
-	json.Unmarshal(fileContent, &configData)
-
+	err = json.Unmarshal(fileContent, &configData)
+  if err != nil {
+    log.Fatal(err)
+  }
 	return configData
 }
