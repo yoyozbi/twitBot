@@ -15,10 +15,8 @@ type Track struct {
   WithRetweets bool `json:"withRetweets"`
 }
 type Config struct {
-	ConsumerKey    string `json:"twitterConsumerKey"`
-	ConsumerSecret string `json:"twitterConsumerSecret"`
-	AccessToken    string `json:"twitterToken"`
-	AccessSecret   string `json:"twitterTokenSecret"`
+	ApiKey    string `json:"twitterApiKey"`
+	ApiKeySecret string `json:"twitterApiKeySecret"`
 	Track 		   []Track `json:"track"`
 }
 

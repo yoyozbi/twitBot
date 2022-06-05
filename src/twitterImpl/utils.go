@@ -42,7 +42,7 @@ func (t *TwitterApi) makeHttpRequest(action string, url string, bodyParams BodyP
 //build headers with a new retrieved access token from the api or the one stored currently
 func (t *TwitterApi) buildHeaders(req *http.Request) error {
 	if accessToken == "" {
-		t, err := RetrievAcessToken(t.Config.ConsumerKey, t.Config.ConsumerSecret)
+		t, err := RetrievAcessToken(t.Config.ApiKey, t.Config.ApiKeySecret)
 		if err != nil {
 			return err
 		}
