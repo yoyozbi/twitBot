@@ -1,7 +1,7 @@
 package twitterImpl
 
 import (
-	"log"
+  "log"
 	"github.com/yoyozbi/twitBot/src/utils"
 )
 
@@ -16,14 +16,12 @@ func Start(c chan *Tweet) {
 	//	TokenURL:     "https://api.twitter.com/oauth2/token",
 	//}
 	//client := twitter.NewClient(httpClient)
-  log.Println(config.ConsumerKey)
   t := TwitterApi{
     Config: config,
   }	
 
 	_, err := t.SetStreamRules([]StreamRule{{Value: config.TwitterRule()}})
 	if err != nil {
-    log.Println("a")
 		log.Fatal(err)
 	}
 

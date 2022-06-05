@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
-  "log"
 )
 
 type BodyParams struct {
@@ -23,7 +22,6 @@ func (t *TwitterApi) makeHttpRequest(action string, url string, bodyParams BodyP
 	if err != nil {
 		return nil, nil, err
 	}
-  log.Println(req.Header.Get("Authorization"))
 	if bodyParams.ContentType != "" {
 		req.Header.Add("content_type", bodyParams.ContentType)
 	}

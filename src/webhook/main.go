@@ -6,10 +6,9 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"strconv"
 	"strings"
 
-	"github.com/dghubble/go-twitter/twitter"
+	"github.com/yoyozbi/twitBot/src/twitterImpl"
 	"github.com/yoyozbi/twitBot/src/utils"
 )
 type WebhookBody struct {
@@ -17,8 +16,8 @@ type WebhookBody struct {
 	IconURL string `json:"icon_url,omitempty" `
 	Username string `json:"username,omitempty"`
 }
-func Post(t utils.Track, tweet *twitter.Tweet) error{
-	msg := strings.ReplaceAll(t.Message,"{link}","https://twitter.com/" + t.Username + "/status/" + strconv.FormatInt(tweet.ID,10))
+func Post(t utils.Track, tweet *twitterImpl.Tweet) error{
+	msg := strings.ReplaceAll(t.Message,"{link}",tweet.GetUrl())
 	body := WebhookBody{Content: msg}
 	b, err := json.Marshal(body)
 	if err != nil {
