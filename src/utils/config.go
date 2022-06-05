@@ -11,12 +11,12 @@ type Track struct {
 	Webhook 	string `json:"webhook"`
 	Message 	string `json:"message"`
 	Username 	string `json:"username"`
+  WithReplies bool `json:"withReplies"`
+  WithRetweets bool `json:"withRetweets"`
 }
 type Config struct {
-	ConsumerKey    string `json:"twitterConsumerKey"`
-	ConsumerSecret string `json:"twitterConsumerSecret"`
-	AccessToken    string `json:"twitterToken"`
-	AccessSecret   string `json:"twitterTokenSecret"`
+	ApiKey    string `json:"twitterApiKey"`
+	ApiKeySecret string `json:"twitterApiKeySecret"`
 	Track 		   []Track `json:"track"`
 }
 
@@ -43,7 +43,9 @@ func LoadConfig() Config {
 	if err != nil {
 		log.Fatal(err)
 	}
-	json.Unmarshal(fileContent, &configData)
-
+	err = json.Unmarshal(fileContent, &configData)
+  if err != nil {
+    log.Fatal(err)
+  }
 	return configData
 }

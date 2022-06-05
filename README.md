@@ -10,15 +10,15 @@
 
 ```json
 {
-  "twitterConsumerKey": "<YOUR_KEY>",
-  "twitterConsumerSecret": "<YOUR_KEY>",
-  "twitterToken": "<YOUR_KEY>",
-  "twitterTokenSecret": "<YOUR_KEY>",
+  "twitterApiKey": "<YOUR_KEY>",
+  "twitterApiKeySecret": "<YOUR_KEY>",
   "track": [
     {
       "webhook": "<YOUR_WEBHOOK_URL>",
       "message": "{link}",
-      "username": "<THE_TWITTER_ACCOUNT>"
+      "username": "<THE_TWITTER_ACCOUNT>",
+      "withReplies": false, //if you want to send tweet replies
+      "withRetweets": false, //if you want to sent retweets
     }
   ]
 }
