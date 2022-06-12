@@ -35,7 +35,7 @@ func RetrievAcessToken(apiKey string, apiSecretKey string) (Oauth2ClientResponse
 		return Oauth2ClientResponse{}, err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-  req.Header.Add("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(apiKey + ":" + apiSecretKey)))
+	req.Header.Add("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(apiKey+":"+apiSecretKey)))
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return Oauth2ClientResponse{}, err
@@ -50,5 +50,6 @@ func RetrievAcessToken(apiKey string, apiSecretKey string) (Oauth2ClientResponse
 	}
 	var res Oauth2ClientResponse
 	err = json.Unmarshal(responseData, &res)
+
 	return res, err
 }

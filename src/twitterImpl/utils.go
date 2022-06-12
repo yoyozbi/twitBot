@@ -23,7 +23,7 @@ func (t *TwitterApi) makeHttpRequest(action string, url string, bodyParams BodyP
 		return nil, nil, err
 	}
 	if bodyParams.ContentType != "" {
-		req.Header.Add("content_type", bodyParams.ContentType)
+		req.Header.Add("content-type", bodyParams.ContentType)
 	}
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -35,7 +35,6 @@ func (t *TwitterApi) makeHttpRequest(action string, url string, bodyParams BodyP
 	if err != nil {
 		return resp, nil, err
 	}
-
 	return resp, responseBody, nil
 }
 

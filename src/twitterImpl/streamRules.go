@@ -3,6 +3,7 @@ package twitterImpl
 import (
 	"encoding/json"
 	"errors"
+	"net/http"
 )
 
 const RULES_URL = BASE_URL + "/2/tweets/search/stream/rules"
@@ -83,7 +84,10 @@ func (t *TwitterApi) UpdateStreamRule(params interface{}) (UpdateStreamResponse,
 		return UpdateStreamResponse{}, err
 	}
 
-	_, respBody, err := t.makeHttpRequest("POST", RULES_URL, BodyParams{ContentType: "application/json", Body: body})
+	r, respBody, err := t.makeHttpRequest("POST", RULES_URL, BodyParams{ContentType: "application/json", Body: body})
+	if r.StatusCode != http.StatusCreated && r.StatusCode != http.StatusOK {
+		return UpdateStreamResponse{}, errors.New(string(respBody))
+	}
 	if err != nil {
 		return UpdateStreamResponse{}, err
 	}
@@ -108,11 +112,15 @@ func (t *TwitterApi) DeleteAllStreamRules() (UpdateStreamResponse, error) {
 		return UpdateStreamResponse{}, err
 	}
 	ids := make([]string, len(rules.Data))
-	for i, rule := range rules.Data {
-		ids[i] = rule.Id
+	if len(ids) > 0 {
+		for i, rule := range rules.Data {
+			ids[i] = rule.Id
+		}
+		params := DeleteStreamRulesParams{
+			Delete: DeleteStreamRules{Ids: ids},
+		}
+		return t.UpdateStreamRule(params)
+	} else {
+		return UpdateStreamResponse{}, nil
 	}
-	params := DeleteStreamRulesParams{
-		Delete: DeleteStreamRules{Ids: ids},
-	}
-	return t.UpdateStreamRule(params)
 }
