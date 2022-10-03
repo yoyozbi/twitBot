@@ -9,7 +9,7 @@ RUN env ${opts} go build -o /app/main src/main.go
 
 FROM golang:alpine3.15 as runner
 
-WORKDIR /app
-COPY --from=builder /app/main /app/main
+WORKDIR /data
+COPY --from=builder /app/main /data/main
 
 CMD ["/app/main"]
